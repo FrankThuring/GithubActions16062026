@@ -1,0 +1,12 @@
+name: Changelog check
+description: Fails if the changelog file was not modified in the pull request
+
+inputs:
+  path:
+    description: Path to the changelog file, relative to the repo root
+    required: false
+    default: Github_Copilot_Actions-main/labs/CHANGELOG.md
+
+runs:
+  using: node20
+  main: index.js

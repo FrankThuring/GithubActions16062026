@@ -4,14 +4,16 @@ on:
   push:
     branches: [main]
     paths:
-      - 'Github_Copilot_Actions-main/labs/frontend-app/**'
+      - 'Github_Copilot_Actions-main/labs/**'
       - '.github/workflows/frontend-ci.yml'
       - '.github/actions/setup-and-test-frontend/**'
+      - '.github/actions/changelog-check/**'
   pull_request:
     paths:
-      - 'Github_Copilot_Actions-main/labs/frontend-app/**'
+      - 'Github_Copilot_Actions-main/labs/**'
       - '.github/workflows/frontend-ci.yml'
       - '.github/actions/setup-and-test-frontend/**'
+      - '.github/actions/changelog-check/**'
   workflow_dispatch:
 
 jobs:
@@ -55,3 +57,14 @@ jobs:
 
       - name: List artifact contents
         run: ls -la dist
+
+  changelog:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Check CHANGELOG.md was updated
+        uses: ./.github/actions/changelog-check

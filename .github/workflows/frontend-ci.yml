@@ -51,3 +51,16 @@ jobs:
           name: frontend-dist
           path: Github_Copilot_Actions-main/labs/frontend-app/dist
           if-no-files-found: error
+
+  inspect:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist
+
+      - name: List artifact contents
+        run: ls -la dist

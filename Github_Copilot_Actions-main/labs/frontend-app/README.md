@@ -33,3 +33,5 @@ npm run build   # compile to dist/
 > labs are fast and dependency-light. The Copilot and Actions concepts map 1:1 to
 > a real Angular project — only the test runner command changes.
 
+
+<!-- lab10 demo: trigger CI without touching CHANGELOG -->

@@ -1,0 +1,53 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/frontend-app/**'
+      - '.github/workflows/frontend-ci.yml'
+  pull_request:
+    paths:
+      - 'labs/frontend-app/**'
+      - '.github/workflows/frontend-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18, 20, 22]
+    defaults:
+      run:
+        working-directory: labs/frontend-app
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: labs/frontend-app/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint (typecheck)
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload dist artifact
+        if: matrix.node-version == 20
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: labs/frontend-app/dist
+          if-no-files-found: error

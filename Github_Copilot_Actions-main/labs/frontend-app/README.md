@@ -32,3 +32,4 @@ npm run build   # compile to dist/
 > Note: this uses `vitest` + `tsc` instead of a full Angular/Karma setup so the
 > labs are fast and dependency-light. The Copilot and Actions concepts map 1:1 to
 > a real Angular project — only the test runner command changes.
+

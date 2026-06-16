@@ -4,11 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'labs/frontend-app/**'
+      - 'Github_Copilot_Actions-main/labs/frontend-app/**'
       - '.github/workflows/frontend-ci.yml'
   pull_request:
     paths:
-      - 'labs/frontend-app/**'
+      - 'Github_Copilot_Actions-main/labs/frontend-app/**'
       - '.github/workflows/frontend-ci.yml'
   workflow_dispatch:
 
@@ -21,7 +21,7 @@ jobs:
         node-version: [18, 20, 22]
     defaults:
       run:
-        working-directory: labs/frontend-app
+        working-directory: Github_Copilot_Actions-main/labs/frontend-app
     steps:
       - uses: actions/checkout@v4
 
@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-          cache-dependency-path: labs/frontend-app/package-lock.json
+          cache-dependency-path: Github_Copilot_Actions-main/labs/frontend-app/package-lock.json
 
       - name: Install
         run: npm ci
@@ -49,5 +49,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
-          path: labs/frontend-app/dist
+          path: Github_Copilot_Actions-main/labs/frontend-app/dist
           if-no-files-found: error
